@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "sinon": "^7.3.2",
+    "sinon-test": "^2.4.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
+  }
+}
