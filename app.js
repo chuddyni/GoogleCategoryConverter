@@ -1,43 +1,26 @@
 const fs = require('fs')
 const util = require('util')
 
-const locales = { "pl_PL": "taxonomy.json" };
-
-// const converter = new GoogleCategoryConverter({ locales });
-
-//TODO Usuwanie niepotrzebnych linii z taxomy
-
-
-
-function txtToJson(pathToFileTxt) {
-  var data = fs.readFileSync(pathToFileTxt).toString().replace(/>/g, '-').split('\n');
-
-  for (var x = 0; x < data.length; x++) {
-    data[x] = data[x].split(' - ');
+class GoogleCategoryConverter {
+  constructor(locales) {
+    this.locales = locales;
   }
 
-  var output = {};
-
-  for (var x = 0; x < data.length; x++) { //po tablicy calej
-    for (var y = 0; y < data[x].length; y++) { //po elementach w tablicy
-      // x [141,Aparaty] y Aparaty
-      if (y === 0) {
-        output[data[x][0]] = [data[x][1]];
-      }
-      else if (y >= 2) {
-        output[data[x][0]].push(data[x][y]);
-      }
-    }
+  getCategories(categoryNumber) {
+    var obj = JSON.parse(fs.readFileSync(locales.pl_PL, 'utf8'));
+    return obj[categoryNumber];
   }
-  //  fs.writeFileSync('taxonomy.json',util.inspect(output) , 'utf-8')
-  return output;
+
 }
 
-function GoogleCategoryConverter(categoryNumber) {
-  foundCategory = output[categoryNumber];
-  return foundCategory;
-}
 
 // console.log(GoogleCategoryConverter(141))
 
-console.log(txtToJson("taxonomy.txt"));
+// console.log(txtToJson("taxonomy.txt"));
+
+// const plpl = new GoogleCategoryConverter("taxonomy.txt");
+// console.log(GoogleCategoryConverter.txtToJson('taxonomy.txt'));
+
+const locales = { "pl_PL":  "taxonomy.json" };
+const converter = new GoogleCategoryConverter(locales);
+console.log(converter.getCategories(3578));
