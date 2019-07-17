@@ -28,18 +28,37 @@ describe('Converter', function () {
         });
         it('dla klucza nie obecnego w JSON powinien wyrzucic error', function (done) {
             try {
-                var categories = converter.getCategories(123123123, { level: "5" }).length;
+                var categories = converter.getCategories(123123123, { level: "5" });
                 expect(categories).to.throw(Error);
             }
             catch (error) {
                 done();
             }
         });
-        it('dla klucza nie obecnego w JSON powinien wyrzucic error', function (done) {
+        it('dla zlej sciezki plku JSON powinien wyrzucic error', function (done) {
             try {
                 var locales = { "pl_PL": "../ASDbadNAME.json" };
                 var converter = new app(locales);
                 expect(converter).to.throw(Error);
+            }
+            catch (error) {
+                done();
+            }
+        });
+        it('dla JSON w zlym formacie', function (done) {
+            try {
+                var locales = { "pl_PL": "../taxonomy.txt" };
+                var converter = new app(locales);
+                expect(converter).to.throw(Error);
+            }
+            catch (error) {
+                done();
+            }
+        });
+        it('dla braku podania kontekstu (brak liczby w konstruktorze)', function (done) {
+            try {
+                var categories = converter.getCategories();
+                expect(categories).to.throw(Error);
             }
             catch (error) {
                 done();
