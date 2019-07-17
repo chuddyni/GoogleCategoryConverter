@@ -4,7 +4,7 @@ class GoogleCategoryConverter {
   constructor(locales) {
     this.locales = locales;
     try {
-      this.data = require('./taxonomy.json');
+      this.data = require(locales[Object.keys(locales)[0]]);
     }
     catch(e) {
       console.log("bladblad blad");
@@ -36,7 +36,7 @@ class GoogleCategoryConverter {
 // const plpl = new GoogleCategoryConverter("taxonomy.txt");
 // console.log(GoogleCategoryConverter.txtToJson('taxonomy.txt'));
 
-const locales = { "pl_PL": "taxonomy.json" };
+const locales = { "pl_PL": "./taxonomy.json" };
 const converter = new GoogleCategoryConverter(locales);
 
 // console.log(converter.getCategories(3578));
