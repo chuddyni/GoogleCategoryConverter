@@ -1,0 +1,39 @@
+{
+    "discovery": {
+      "method": "SearchRequest",
+      "timeBetweenRequest": 4000,
+      "responsePolicy": {
+        "503": {
+          "retry": 4,
+          "delay": 5000
+        }
+      },
+      "template": "{host}/szukaj?controller=search&orderby=position&orderway=desc&search_query={key}&submit_search=",
+      "discover": "var links = document.querySelectorAll('.product_list .ajax_block_product .product-container .item-inner .left-block .product-image-container .product_img_link');if(links.length > 10) {return [];}return Array.from(links).map(link => link.getAttribute('href'));"
+    },
+    "verification": {
+      "timeBetweenRequest": 500,
+      "responsePolicy": {
+        "503": {
+          "retry": 4,
+          "delay": 5000
+        }
+      },
+      "verify": "return document.querySelector('#product_reference > span').innerHTML === feedItem.searchValue;",
+      "cacheKey": "return document.querySelector('div[itemprop=\"mpn\"]').innerHTML"
+    },
+    "scraping": {
+      "timeBetweenRequest": 500,
+      "responsePolicy": {
+        "503": {
+          "retry": 4,
+          "delay": 5000
+        }
+      },
+      "image": "return document.querySelector('#product > div.zoomContainer > div.zoomLens').style.backgroundImage.slice(5,document.querySelector('#product > div.zoomContainer > div.zoomLens').style.backgroundImage.length-2);",
+      "name": "return  document.querySelector('#center_column > div:nth-child(2) > div > div.pb-center-column.col-xs-12.col-sm-7.col-md-7 > h1').innerText;",
+      "price": "var priceText = document.querySelector('#our_price_display').innerText;priceText = priceText.replace('zł', '').replace(',', '.').trim();return parseFloat(priceText);"
+    }
+  }
+
+  
